@@ -3,3 +3,11 @@ moveForward(): Both motors are set to move forward.
 turnRight(): Stops the right motor and runs only the left motor to turn right.
 turnLeft(): Stops the left motor and runs only the right motor to turn left.
 stopMoving(): Stops both motors if the robot goes off the line entirely.
+
+Required Components
+Arduino Uno
+2 IR sensors (one for left and one for right)
+Motor driver module (L298N)
+2 DC motors (for the left and right wheels)
+Power supply (battery pack)
+Jumper wires
