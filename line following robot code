@@ -1,0 +1,70 @@
+///////////////////////////////////////////////
+#define LEFT_SENSOR_PIN 2   // Left IR sensor input
+#define RIGHT_SENSOR_PIN 3  // Right IR sensor input
+
+#define LEFT_MOTOR_PIN1 8   // Left motor control pin 1
+#define LEFT_MOTOR_PIN2 9   // Left motor control pin 2
+#define RIGHT_MOTOR_PIN1 10 // Right motor control pin 1
+#define RIGHT_MOTOR_PIN2 11 // Right motor control pin 2
+
+void setup() {
+  // Set motor pins as outputs
+  pinMode(LEFT_MOTOR_PIN1, OUTPUT);
+  pinMode(LEFT_MOTOR_PIN2, OUTPUT);
+  pinMode(RIGHT_MOTOR_PIN1, OUTPUT);
+  pinMode(RIGHT_MOTOR_PIN2, OUTPUT);
+
+  // Set sensor pins as inputs
+  pinMode(LEFT_SENSOR_PIN, INPUT);
+  pinMode(RIGHT_SENSOR_PIN, INPUT);
+}
+
+void loop() {
+  // Read sensor values
+  int leftSensor = digitalRead(LEFT_SENSOR_PIN);
+  int rightSensor = digitalRead(RIGHT_SENSOR_PIN);
+
+  // Line-following logic
+  if (leftSensor == LOW && rightSensor == LOW) {
+    // Both sensors on the line - move forward
+    moveForward();
+  } else if (leftSensor == HIGH && rightSensor == LOW) {
+    // Left sensor off the line, right sensor on the line - turn right
+    turnRight();
+  } else if (leftSensor == LOW && rightSensor == HIGH) {
+    // Right sensor off the line, left sensor on the line - turn left
+    turnLeft();
+  } else {
+    // Both sensors off the line - stop
+    stopMoving();
+  }
+}
+
+// Functions to control the motors
+void moveForward() {
+  digitalWrite(LEFT_MOTOR_PIN1, HIGH);
+  digitalWrite(LEFT_MOTOR_PIN2, LOW);
+  digitalWrite(RIGHT_MOTOR_PIN1, HIGH);
+  digitalWrite(RIGHT_MOTOR_PIN2, LOW);
+}
+
+void turnRight() {
+  digitalWrite(LEFT_MOTOR_PIN1, HIGH);
+  digitalWrite(LEFT_MOTOR_PIN2, LOW);
+  digitalWrite(RIGHT_MOTOR_PIN1, LOW);
+  digitalWrite(RIGHT_MOTOR_PIN2, LOW);
+}
+
+void turnLeft() {
+  digitalWrite(LEFT_MOTOR_PIN1, LOW);
+  digitalWrite(LEFT_MOTOR_PIN2, LOW);
+  digitalWrite(RIGHT_MOTOR_PIN1, HIGH);
+  digitalWrite(RIGHT_MOTOR_PIN2, LOW);
+}
+
+void stopMoving() {
+  digitalWrite(LEFT_MOTOR_PIN1, LOW);
+  digitalWrite(LEFT_MOTOR_PIN2, LOW);
+  digitalWrite(RIGHT_MOTOR_PIN1, LOW);
+  digitalWrite(RIGHT_MOTOR_PIN2, LOW);
+}
